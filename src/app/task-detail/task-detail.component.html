@@ -1,0 +1,12 @@
+<div *ngIf="asdf">
+
+  <h2>{{ asdf.title | uppercase }} </h2>
+  <div><span>id: </span>{{asdf.id}}</div>
+  <div>
+    <label>title:
+      <input [(ngModel)]="asdf.title" placeholder="sdgasdsa">
+    </label>
+  </div>
+  
+  <button (click)="goBack()">go back</button>
+</div>
