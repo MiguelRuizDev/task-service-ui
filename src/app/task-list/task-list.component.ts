@@ -21,4 +21,21 @@ export class TaskListComponent implements OnInit {
     this.taskService.getAllTasks().subscribe(manolo => this.amigos = manolo);
   }
 
+  createTask(title:string):void{
+    title = title.trim();
+    if (!title) { 
+      return; 
+    }else{
+      this.taskService.createTask({title} as Task)
+        .subscribe(task => {
+          this.amigos.push(task);}
+      );
+    }
+  }
+
+  deleteTask(task :Task):void{
+    this.amigos = this.amigos.filter(h => h !== task);
+    this.taskService.deleteTask(task).subscribe();
+  }
+
 }

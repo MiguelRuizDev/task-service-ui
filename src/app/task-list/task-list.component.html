@@ -6,6 +6,18 @@
       <a routerLink="/tasks/{{task.id}}">
         <span class="badge">{{task.id}}</span> {{task.title}}
       </a>
+      <button class="delete" title="delete task" (click)="deleteTask(task)">Delete</button>
   </li>
 </ul>
+
+
+<div>
+    <label>Add Task:
+      <input #taskTitle />
+    </label>
+      <!-- (click) passes input value to add() and then clears the input -->
+      <button (click)="createTask(taskTitle.value); taskTitle.value=''">
+      Add
+    </button>
+  </div>
 

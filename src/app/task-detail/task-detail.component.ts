@@ -25,13 +25,18 @@ export class TaskDetailComponent implements OnInit {
   }
 
   getTask(): void{
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = +this.route.snapshot.paramMap.get('id');
     this.taskService.getTask(id)
       .subscribe(hero => this.asdf = hero);
   }
 
   goBack(): void {
     this.location.back();
+  }
+
+  save(): void {
+    this.taskService.updateTask(this.asdf)
+      .subscribe(() => this.goBack());
   }
 
 }
