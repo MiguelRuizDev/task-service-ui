@@ -9,7 +9,7 @@ import {TaskService} from '../task.service';
 })
 export class TaskListComponent implements OnInit {
 
-  amigos;
+  tasks;
 
   constructor(private taskService : TaskService) {}
 
@@ -18,23 +18,22 @@ export class TaskListComponent implements OnInit {
   }
 
   getAllTasks():void {
-    this.taskService.getAllTasks().subscribe(manolo => this.amigos = manolo);
+    this.taskService.getAllTasks().subscribe(manolo => this.tasks = manolo);
   }
 
-  createTask(title:string):void{
-    title = title.trim();
-    if (!title) { 
-      return; 
-    }else{
-      this.taskService.createTask({title} as Task)
+  createTask(title:string, description: string):void{
+    if (title!="" && description!=""){
+      let task = new Task(title, description)
+      this.taskService.createTask(task)
         .subscribe(task => {
-          this.amigos.push(task);}
+          this.tasks.push(task);}
       );
     }
+
   }
 
   deleteTask(task :Task):void{
-    this.amigos = this.amigos.filter(h => h !== task);
+    this.tasks = this.tasks.filter(h => h !== task);
     this.taskService.deleteTask(task).subscribe();
   }
 

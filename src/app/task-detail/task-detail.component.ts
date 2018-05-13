@@ -12,7 +12,7 @@ import { TaskService }  from '../task.service';
 })
 export class TaskDetailComponent implements OnInit {
 
-  @Input() asdf: Task;
+  @Input() task: Task;
 
   constructor(
     private taskService: TaskService,
@@ -27,7 +27,7 @@ export class TaskDetailComponent implements OnInit {
   getTask(): void{
     const id = +this.route.snapshot.paramMap.get('id');
     this.taskService.getTask(id)
-      .subscribe(hero => this.asdf = hero);
+      .subscribe(data => this.task = data);
   }
 
   goBack(): void {
@@ -35,7 +35,7 @@ export class TaskDetailComponent implements OnInit {
   }
 
   save(): void {
-    this.taskService.updateTask(this.asdf)
+    this.taskService.updateTask(this.task)
       .subscribe(() => this.goBack());
   }
 

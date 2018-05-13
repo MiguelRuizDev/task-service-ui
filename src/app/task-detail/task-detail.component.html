@@ -1,14 +1,50 @@
-<div *ngIf="asdf">
+<div *ngIf="task">
 
-  <h2>{{ asdf.title | uppercase }} </h2>
-  <div><span>id: </span>{{asdf.id}}</div>
-  <div>
-    <label>title:
-      <input [(ngModel)]="asdf.title" placeholder="sdgasdsa">
-    </label>
-  </div>
+  <h2>{{ task.title | uppercase }} </h2>
 
-  <button (click)="save()">save</button>
+  <ul class="list-group text-left">
+    <li class="list-group-item"> <b> Id: </b>  {{task.id}} </li>
+    <li class="list-group-item"> 
+        <b> Title: </b>  {{task.title}} |     
+      <input [(ngModel)]="task.title" placeholder="title">
+    </li>
+    <li class="list-group-item"> 
+        <b> State: </b>  {{task.state}} |  
+        Active <input [(ngModel)]="task.state"type="radio" name="state" value="ACTIVE" checked> 
+        Assigned <input [(ngModel)]="task.state"type="radio" name="state" value="ASSIGNED"> 
+        Suspended <input [(ngModel)]="task.state"type="radio" name="state" value="SUSPENDED"> 
+        Completed <input [(ngModel)]="task.state"type="radio" name="state" value="COMPLETED"> 
+    </li>
+    <li class="list-group-item"> 
+        <b> Creation Date:  </b> {{task.creationDate}} |  
+    </li>
+    <li class="list-group-item"> 
+        <b> Due Date:  </b>  {{task.dueDate}}  |  
+      <input [(ngModel)]="task.dueDate" type="date"placeholder="dueDate">
+    </li>
+    <li class="list-group-item"> 
+        <b> Assigned User: </b>  {{task.assignedUser}} |  
+      <input [(ngModel)]="task.assignedUser" placeholder="assignedUser">
+    </li>
+    <li class="list-group-item"> 
+     <b> Priority: </b> {{task.priority}} |  
+      Low <input [(ngModel)]="task.priority"type="radio" name="priority" value="LOW" > 
+      Normal <input [(ngModel)]="task.priority"type="radio" name="priority" value="NORMAL" checked> 
+      Important <input [(ngModel)]="task.priority"type="radio" name="priority" value="IMPORTANT"> 
+      Critical <input [(ngModel)]="task.priority"type="radio" name="priority" value="CRITICAL"> 
+    </li>
+    <li class="list-group-item"> 
+        <b> Parent:  </b>  {{task.parent}} |  
+      <input [(ngModel)]="task.parent" placeholder="parent">
+    </li>
+    <li class="list-group-item"> 
+        <b> Description: </b>  {{task.description}}  |  
+      <input [(ngModel)]="task.description" placeholder="description">
+    </li>
+  </ul>
+
+
+  <button class="btn btn-success" (click)="save()">Save</button>
   
-  <button (click)="goBack()">go back</button>
+  <button class="btn btn-primary" (click)="goBack()">Go back</button>
 </div>
