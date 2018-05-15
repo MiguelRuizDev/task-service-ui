@@ -1,14 +1,14 @@
 export class Task {
 
-    id:number;
-    title: string = "none";
-    state:string = "ACTIVE";
-    creationDate:string = "now";
-    dueDate:string = "next week";
-    assignedUser:string = "anyone";
-    priority:string = "NORMAL";
-    parent:string = "none";
-    description:string = "none";
+    id:string;
+    title: string;
+    state:string;
+    creationDate:string; 
+    dueDate:string;
+    assignedUser:string;
+    priority:string;
+    parent:string;
+    description:string;
 
     constructor(title: string, description: string){
         this.title = title;

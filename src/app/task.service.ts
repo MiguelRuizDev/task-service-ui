@@ -13,7 +13,7 @@ const httpOptions = {
 })
 export class TaskService {
 
-  private mainUrl = 'api/tasks'; //attention to the api in the route
+  private mainUrl = 'http://localhost:8080/tasks/mock';
 
   constructor(private http: HttpClient) { }
 
@@ -21,23 +21,23 @@ export class TaskService {
     return this.http.get<Task[]>(this.mainUrl);
   }
 
-  getTask(id: number): Observable<Task>{
-    const url = `${this.mainUrl}/${id}`;
+  getTask(id: string): Observable<Task>{
+    const url = this.mainUrl + `/${id}`;
     return this.http.get<Task>(url);
   }
 
   updateTask(task: Task):Observable<any>{
-    return this.http.put(this.mainUrl, task, httpOptions);
+    const id = task.id;
+    return this.http.post(this.mainUrl + `/${id}`, task, httpOptions);
   }
 
   createTask(task : Task):Observable<Task>{
     return this.http.post<Task>(this.mainUrl, task, httpOptions);
   }
+
   deleteTask(task: Task): Observable<Task>{
     const id = task.id;
-    const url = `${this.mainUrl}/${id}`;
-
-    return this.http.delete<Task>(url, httpOptions)
+    return this.http.delete<Task>(this.mainUrl + `/${id}/delete`, httpOptions)
   }
 
 

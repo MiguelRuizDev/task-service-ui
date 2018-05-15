@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {Task} from '../domain';
 import {TaskService} from '../task.service';
+
+import {DataSource} from '@angular/cdk/table';
+
+import {MatPaginator, MatTableDataSource, MatTable} from '@angular/material';
 
 @Component({
   selector: 'app-task-list',
@@ -9,7 +13,20 @@ import {TaskService} from '../task.service';
 })
 export class TaskListComponent implements OnInit {
 
-  tasks;
+  @ViewChild(MatPaginator) 
+  paginator: MatPaginator;
+
+  @ViewChild(MatTable) 
+  table: MatTable<Task>;
+
+  tasks: Task[]; //only used to load the dataSource field
+
+  displayedColumns = ['id', 'title','state', 
+                      'creationDate', 'dueDate', 'assignedUser', 
+                      'priority', 'parent', 'description', 'actions'];
+                      
+  dataSource: MatTableDataSource <Task>;
+
 
   constructor(private taskService : TaskService) {}
 
@@ -18,23 +35,34 @@ export class TaskListComponent implements OnInit {
   }
 
   getAllTasks():void {
-    this.taskService.getAllTasks().subscribe(manolo => this.tasks = manolo);
+    this.taskService.getAllTasks().subscribe((data) => {
+      this.tasks = data;
+      this.dataSource = new MatTableDataSource<Task>(this.tasks);
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   createTask(title:string, description: string):void{
     if (title!="" && description!=""){
-      let task = new Task(title, description)
+      let task = new Task(title, description);
       this.taskService.createTask(task)
         .subscribe(task => {
-          this.tasks.push(task);}
+          //we refresh the displayed data right away
+          const data = this.dataSource.data;
+          data.push(task);
+          this.dataSource.data = data;
+        }
       );
     }
 
   }
 
   deleteTask(task :Task):void{
-    this.tasks = this.tasks.filter(h => h !== task);
     this.taskService.deleteTask(task).subscribe();
+    //we refresh the displayed data right away
+    this.dataSource.data = this.dataSource.data.filter( t => t !== task);
   }
+
+
 
 }
