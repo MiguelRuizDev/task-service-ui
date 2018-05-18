@@ -10,6 +10,8 @@ export class Task {
     parent:string;
     description:string;
 
+    information: Object;
+
     constructor(title: string, description: string){
         this.title = title;
         this.description = description;

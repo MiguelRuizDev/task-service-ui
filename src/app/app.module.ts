@@ -16,6 +16,8 @@ import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTableModule } from "@angular/material";
 
 import { AngularPaginatorModule } from 'angular-paginator';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 
 
 @NgModule({
@@ -38,13 +40,7 @@ import { AngularPaginatorModule } from 'angular-paginator';
     MatPaginatorModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    // AngularPaginatorModule
-
-
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    //HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { dataEncapsulation: false })
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
