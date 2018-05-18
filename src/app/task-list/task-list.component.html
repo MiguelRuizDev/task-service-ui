@@ -50,16 +50,33 @@
       <input #taskDescription placeholder="Description" />
     </label>
       <!-- (click) passes input value to add() and then clears the input -->
-      <button class="btn btn-success btn-xs" (click)="createTask(taskTitle.value, taskDescription.value); taskTitle.value=''; taskDescription.value=''">
+      <button class="btn btn-success" (click)="createTask(taskTitle.value, taskDescription.value); taskTitle.value=''; taskDescription.value=''">
       Create
     </button>
   </div>
 
+  <hr>  
+  
+  <h2>Task list</h2> 
 
-  <h2>Task list</h2>
+  <button class="btn btn-info" (click)="getAllTasks('any')">All tasks</button>
+
+  <button class="btn btn-info" (click)="getAllTasks('active')">Active tasks</button>
+
+  <button class="btn btn-info" (click)="getAllTasks('suspended')">Suspended tasks</button>
+
+  <button class="btn btn-info" (click)="getAllTasks('assigned')">Assigned tasks</button>
+
+  <button class="btn btn-info" (click)="getAllTasks('completed')">Completed tasks</button>
+
+ 
+
+
+  <hr>  
+  
 
   <div class="example-container mat-elevation-z8">
-  <table #table mat-table [dataSource]="dataSource">
+  <table #table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef> Id </th>
@@ -67,37 +84,37 @@
       </ng-container>
 
       <ng-container matColumnDef="title">
-          <th mat-header-cell *matHeaderCellDef> Title </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
           <td mat-cell *matCellDef="let element"> {{element.title}} </td>
       </ng-container>
 
       <ng-container matColumnDef="state">
-          <th mat-header-cell *matHeaderCellDef> State </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
           <td mat-cell *matCellDef="let element"> {{element.state}} </td>
       </ng-container>
 
       <ng-container matColumnDef="creationDate">
-          <th mat-header-cell *matHeaderCellDef> creationDate </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> creationDate </th>
           <td mat-cell *matCellDef="let element"> {{element.creationDate}} </td>
       </ng-container>
 
       <ng-container matColumnDef="dueDate">
-          <th mat-header-cell *matHeaderCellDef> dueDate </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> dueDate </th>
           <td mat-cell *matCellDef="let element"> {{element.dueDate}} </td>
       </ng-container>
 
       <ng-container matColumnDef="assignedUser">
-          <th mat-header-cell *matHeaderCellDef> assignedUser </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> assignedUser </th>
           <td mat-cell *matCellDef="let element"> {{element.assignedUser}} </td>
       </ng-container>
 
       <ng-container matColumnDef="priority">
-          <th mat-header-cell *matHeaderCellDef> priority </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> priority </th>
           <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
       </ng-container>
 
       <ng-container matColumnDef="parent">
-          <th mat-header-cell *matHeaderCellDef> parent </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> parent </th>
           <td mat-cell *matCellDef="let element"> {{element.parent}} </td>
       </ng-container>
 
@@ -109,8 +126,8 @@
       <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let element"> 
-              <a class="btn btn-success btn-xs" routerLink="/tasks/mock/{{element.id}}" >Details</a>
-              <button class="btn btn-danger btn-xs" title="delete task" (click)="currentTask = element" data-toggle="modal" data-target="#delete-modal">Delete</button>
+              <a class="btn btn-success" routerLink="/tasks/{{element.id}}" >Details</a>
+              <button class="btn btn-danger" title="delete task" (click)="currentTask = element" data-toggle="modal" data-target="#delete-modal">Delete</button>
           </td>
       </ng-container>
 

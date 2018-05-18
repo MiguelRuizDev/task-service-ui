@@ -4,7 +4,7 @@ import {TaskService} from '../task.service';
 
 import {DataSource} from '@angular/cdk/table';
 
-import {MatPaginator, MatTableDataSource, MatTable} from '@angular/material';
+import {MatPaginator, MatTableDataSource, MatTable, MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-task-list',
@@ -19,9 +19,11 @@ export class TaskListComponent implements OnInit {
   @ViewChild(MatTable) 
   table: MatTable<Task>;
 
+  @ViewChild(MatSort) sort: MatSort;
+
   tasks: Task[]; //only used to load the dataSource field
 
-  displayedColumns = ['id', 'title','state', 
+  displayedColumns = [ 'title','state', 
                       'creationDate', 'dueDate', 'assignedUser', 
                       'priority', 'parent', 'description', 'actions'];
                       
@@ -31,14 +33,15 @@ export class TaskListComponent implements OnInit {
   constructor(private taskService : TaskService) {}
 
   ngOnInit() {
-    this.getAllTasks();
+    this.getAllTasks("any");
   }
 
-  getAllTasks():void {
-    this.taskService.getAllTasks().subscribe((data) => {
+  getAllTasks(state:string):void {
+    this.taskService.getAllTasks(state).subscribe((data) => {
       this.tasks = data;
       this.dataSource = new MatTableDataSource<Task>(this.tasks);
       this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 

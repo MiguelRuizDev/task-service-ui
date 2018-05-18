@@ -6,45 +6,57 @@
     <li class="list-group-item"> <b> Id: </b>  {{task.id}} </li>
     <li class="list-group-item"> 
         <b> Title: </b>  {{task.title}} |     
-      <input [(ngModel)]="task.title" placeholder="title">
+      <input [(ngModel)]="task.title" placeholder="title" [disabled]="task.state=='COMPLETED'" (change)="save()">
     </li>
-    <li class="list-group-item"> 
-        <b> State: </b>  {{task.state}} |  
+  <li class="list-group-item"> 
+        <b> State: </b>  {{task.state}}   <!--  |  
         Active <input [(ngModel)]="task.state"type="radio" name="state" value="ACTIVE" checked> 
         Assigned <input [(ngModel)]="task.state"type="radio" name="state" value="ASSIGNED"> 
         Suspended <input [(ngModel)]="task.state"type="radio" name="state" value="SUSPENDED"> 
         Completed <input [(ngModel)]="task.state"type="radio" name="state" value="COMPLETED"> 
-    </li>
+    </li> -->
     <li class="list-group-item"> 
-        <b> Creation Date:  </b> {{task.creationDate}} |  
+        <b> Creation Date:  </b> {{task.creationDate}}
     </li>
     <li class="list-group-item"> 
         <b> Due Date:  </b>  {{task.dueDate}}  |  
-      <input [(ngModel)]="task.dueDate" type="date"placeholder="dueDate">
-    </li>
-    <li class="list-group-item"> 
-        <b> Assigned User: </b>  {{task.assignedUser}} |  
-      <input [(ngModel)]="task.assignedUser" placeholder="assignedUser">
+      <input [(ngModel)]="task.dueDate" type="date"placeholder="dueDate" [disabled]="task.state=='COMPLETED'" (change)="save()">
     </li>
     <li class="list-group-item"> 
      <b> Priority: </b> {{task.priority}} |  
-      Low <input [(ngModel)]="task.priority"type="radio" name="priority" value="LOW" > 
-      Normal <input [(ngModel)]="task.priority"type="radio" name="priority" value="NORMAL" checked> 
-      Important <input [(ngModel)]="task.priority"type="radio" name="priority" value="IMPORTANT"> 
-      Critical <input [(ngModel)]="task.priority"type="radio" name="priority" value="CRITICAL"> 
+      Low <input [(ngModel)]="task.priority"type="radio" name="priority" value="LOW" [disabled]="task.state=='COMPLETED'" (change)="save()"> 
+      Normal <input [(ngModel)]="task.priority"type="radio" name="priority" value="NORMAL" [disabled]="task.state=='COMPLETED'" (change)="save()"checked> 
+      Important <input [(ngModel)]="task.priority"type="radio" name="priority" value="IMPORTANT" [disabled]="task.state=='COMPLETED'" (change)="save()"> 
+      Critical <input [(ngModel)]="task.priority"type="radio" name="priority" value="CRITICAL" [disabled]="task.state=='COMPLETED'" (change)="save()"> 
     </li>
     <li class="list-group-item"> 
         <b> Parent:  </b>  {{task.parent}} |  
-      <input [(ngModel)]="task.parent" placeholder="parent">
+      <input [(ngModel)]="task.parent" placeholder="parent" [disabled]="task.state=='COMPLETED'" (change)="save()">
     </li>
     <li class="list-group-item"> 
-        <b> Description: </b>  {{task.description}}  |  
-      <input [(ngModel)]="task.description" placeholder="description">
+      <b> Description: </b>  {{task.description}}  |  
+      <input [(ngModel)]="task.description" placeholder="description" [disabled]="task.state=='COMPLETED'" (change)="save()">
+    </li>
+    <li class="list-group-item"> 
+      <b> Assigned User: </b>  {{task.assignedUser}} |  
+      <input [(ngModel)]="task.assignedUser" placeholder="assignedUser" [disabled]="task.state=='COMPLETED' || task.state=='SUSPENDED'" #assignedUserInput>
+      <button class="btn btn-info" (click)="assign()" [disabled]="task.state=='COMPLETED' || task.state=='SUSPENDED' || task.state=='ASSIGNED' || assignedUserInput.value==''">Assign</button>
+      <button class="btn btn-info" (click)="release()" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED' || task.state=='ACTIVE'">Release</button>
     </li>
   </ul>
 
 
-  <button class="btn btn-success" (click)="save()">Save</button>
+  <!-- <button class="btn btn-success" (click)="save()">Save</button> -->
+
+  <hr>
+
+  <button class="btn btn-info" (click)="suspend()" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'">Suspend</button>
+
+  <button class="btn btn-info" (click)="activate()" [disabled]="task.state=='ACTIVE' || task.state=='COMPLETED' || task.state=='ASSIGNED'">Activate</button>
+
+  <button class="btn btn-info" (click)="complete()" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'">Complete</button>
+
+  <hr>
   
-  <a class="btn btn-primary" routerLink="/tasks/mock">Go back</a>
+  <a class="btn btn-primary" routerLink="/tasks">Go back</a>
 </div>

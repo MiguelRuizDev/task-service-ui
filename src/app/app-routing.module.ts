@@ -6,10 +6,10 @@ import { TaskDetailComponent } from './task-detail/task-detail.component';
 
 const routes: Routes = [
 
-  { path: 'tasks/mock/:id', component: TaskDetailComponent },
+  { path: 'tasks/:id', component: TaskDetailComponent },
   //{ path: 'tasks/:id', component: TaskDetailComponent },
   { path: '', redirectTo: '/tasks', pathMatch: 'full' },
-  { path: 'tasks/mock', component: TaskListComponent }
+  { path: 'tasks', component: TaskListComponent }
   //{ path: 'tasks', component: TaskListComponent }
 ];
 

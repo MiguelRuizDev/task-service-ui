@@ -13,12 +13,16 @@ const httpOptions = {
 })
 export class TaskService {
 
-  private mainUrl = 'http://localhost:8080/tasks/mock';
+  private mainUrl = 'http://localhost:8080/tasks';
 
   constructor(private http: HttpClient) { }
 
-  getAllTasks(): Observable<Task[]>{
-    return this.http.get<Task[]>(this.mainUrl);
+  getAllTasks(state: string): Observable<Task[]>{
+    if(state != "any"){
+      return this.http.get<Task[]>(this.mainUrl + `?state=${state}`);
+    }else{
+      return this.http.get<Task[]>(this.mainUrl);
+    }
   }
 
   getTask(id: string): Observable<Task>{
@@ -26,19 +30,40 @@ export class TaskService {
     return this.http.get<Task>(url);
   }
 
-  updateTask(task: Task):Observable<any>{
-    const id = task.id;
-    return this.http.post(this.mainUrl + `/${id}`, task, httpOptions);
-  }
-
   createTask(task : Task):Observable<Task>{
     return this.http.post<Task>(this.mainUrl, task, httpOptions);
   }
 
-  deleteTask(task: Task): Observable<Task>{
-    const id = task.id;
-    return this.http.delete<Task>(this.mainUrl + `/${id}/delete`, httpOptions)
+  suspendTask(task: Task): Observable<any>{
+    return this.http.post(this.mainUrl + `/${task.id}/suspend`, httpOptions);
   }
+
+  activateTask(task: Task): Observable<Task>{
+    return this.http.post<Task>(this.mainUrl + `/${task.id}/activate`, httpOptions)
+  }
+
+  completeTask(task: Task): Observable<Task>{
+    return this.http.post<Task>(this.mainUrl + `/${task.id}/complete`, httpOptions)
+  }
+
+  assignTask(task: Task) : Observable<Task>{
+    return this.http.post<Task>(this.mainUrl + `/${task.id}/assign?user=${task.assignedUser}`, httpOptions)
+  }
+
+  releaseTask(task: Task) : Observable<Task>{
+    return this.http.post<Task>(this.mainUrl + `/${task.id}/release`, httpOptions)
+  }
+
+  updateTask(task: Task):Observable<any>{
+    return this.http.post(this.mainUrl + `/${task.id}`, task, httpOptions);
+  }
+
+  deleteTask(task: Task): Observable<Task>{
+    return this.http.delete<Task>(this.mainUrl + `/${task.id}/delete`, httpOptions)
+  }
+
+
+
 
 
 }

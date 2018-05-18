@@ -30,13 +30,44 @@ export class TaskDetailComponent implements OnInit {
       .subscribe(data => this.task = data);
   }
 
+  suspend(): void {
+    this.taskService.suspendTask(this.task).subscribe(
+      () => this.getTask(),
+    );
+  }
+
+  activate(): void {
+    this.taskService.activateTask(this.task).subscribe(
+      () => this.getTask(),
+    );
+  }
+
+  complete(): void {
+    this.taskService.completeTask(this.task).subscribe(
+      () => this.getTask(),
+    );
+  }
+
+  assign(): void {
+    this.taskService.assignTask(this.task).subscribe(
+      () => this.getTask(),
+    );
+  }
+
+  release(): void {
+    this.taskService.releaseTask(this.task).subscribe(
+      () => this.getTask(),
+    );
+  }
+
+  save(): void {
+    this.taskService.updateTask(this.task).subscribe();
+  }
+
   goBack(): void {
     this.location.back();
   }
 
-  save(): void {
-    this.taskService.updateTask(this.task)
-      .subscribe();
-  }
+
 
 }
