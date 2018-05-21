@@ -17,6 +17,8 @@ import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortMo
 
 import { AngularPaginatorModule } from 'angular-paginator';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 
 
@@ -40,7 +42,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatPaginatorModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import {Task} from '../domain';
 
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { TaskService }  from '../task.service';
+import { toString } from 'typescript-collections/dist/lib/arrays';
 
 @Component({
   selector: 'app-task-detail',
@@ -12,7 +13,8 @@ import { TaskService }  from '../task.service';
 })
 export class TaskDetailComponent implements OnInit {
 
-  @Input() task: Task;
+  @Input() 
+  task: Task;
 
   constructor(
     private taskService: TaskService,

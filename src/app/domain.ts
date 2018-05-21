@@ -1,3 +1,5 @@
+import * as Collections from 'typescript-collections';
+
 export class Task {
 
     id:string;
@@ -10,11 +12,12 @@ export class Task {
     parent:string;
     description:string;
 
-    information: Object;
+    data: Object;
 
     constructor(title: string, description: string){
         this.title = title;
         this.description = description;
     }
+    
 }
 

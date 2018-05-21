@@ -6,6 +6,8 @@ import { environment } from './environments/environment';
 
 import 'hammerjs';
 
+//import * as Collections from 'typescript-collections';
+
 if (environment.production) {
   enableProdMode();
 }

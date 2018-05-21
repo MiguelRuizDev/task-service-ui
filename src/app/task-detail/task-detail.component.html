@@ -6,36 +6,35 @@
     <li class="list-group-item"> <b> Id: </b>  {{task.id}} </li>
     <li class="list-group-item"> 
         <b> Title: </b>  {{task.title}} |     
-      <input [(ngModel)]="task.title" placeholder="title" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'" (change)="save()">
+      <input
+            [(ngModel)]="task.title" 
+            placeholder="title" 
+            [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'" 
+            (focusout)="save()">
     </li>
   <li class="list-group-item"> 
-        <b> State: </b>  {{task.state}}   <!--  |  
-        Active <input [(ngModel)]="task.state"type="radio" name="state" value="ACTIVE" checked> 
-        Assigned <input [(ngModel)]="task.state"type="radio" name="state" value="ASSIGNED"> 
-        Suspended <input [(ngModel)]="task.state"type="radio" name="state" value="SUSPENDED"> 
-        Completed <input [(ngModel)]="task.state"type="radio" name="state" value="COMPLETED"> 
-    </li> -->
+        <b> State: </b>  {{task.state}}  
     <li class="list-group-item"> 
         <b> Creation Date:  </b> {{task.creationDate}}
     </li>
     <li class="list-group-item"> 
         <b> Due Date:  </b>  {{task.dueDate}}  |  
-      <input [(ngModel)]="task.dueDate" type="date"placeholder="dueDate" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'" (change)="save()">
+      <input [(ngModel)]="task.dueDate" type="date"placeholder="dueDate" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'" (focusout)="save()">
     </li>
     <li class="list-group-item"> 
      <b> Priority: </b> {{task.priority}} |  
-      Low <input [(ngModel)]="task.priority"type="radio" name="priority" value="LOW" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'" (change)="save()"> 
-      Normal <input [(ngModel)]="task.priority"type="radio" name="priority" value="NORMAL" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'" (change)="save()"checked> 
-      Important <input [(ngModel)]="task.priority"type="radio" name="priority" value="IMPORTANT" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'" (change)="save()"> 
-      Critical <input [(ngModel)]="task.priority"type="radio" name="priority" value="CRITICAL" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'" (change)="save()"> 
+      Low <input [(ngModel)]="task.priority"type="radio" name="priority" value="LOW" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'" (focusout)="save()"> 
+      Normal <input [(ngModel)]="task.priority"type="radio" name="priority" value="NORMAL" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'" (focusout)="save()"checked> 
+      Important <input [(ngModel)]="task.priority"type="radio" name="priority" value="IMPORTANT" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'" (focusout)="save()"> 
+      Critical <input [(ngModel)]="task.priority"type="radio" name="priority" value="CRITICAL" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'" (focusout)="save()"> 
     </li>
     <li class="list-group-item"> 
         <b> Parent:  </b>  {{task.parent}} |  
-      <input [(ngModel)]="task.parent" placeholder="parent" [disabled]=" task.state=='SUSPENDED' || task.state=='COMPLETED'" (change)="save()">
+      <input [(ngModel)]="task.parent" placeholder="parent" [disabled]=" task.state=='SUSPENDED' || task.state=='COMPLETED'" (focusout)="save()">
     </li>
     <li class="list-group-item"> 
       <b> Description: </b>  {{task.description}}  |  
-      <input [(ngModel)]="task.description" placeholder="description" [disabled]="task.state=='SUSPENDED' ||  task.state=='COMPLETED'" (change)="save()">
+      <input [(ngModel)]="task.description" placeholder="description" [disabled]="task.state=='SUSPENDED' ||  task.state=='COMPLETED'" (focusout)="save()">
     </li>
     <li class="list-group-item"> 
       <b> Assigned User: </b>  {{task.assignedUser}} |  
@@ -49,29 +48,33 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <b>Information</b>
+            <b>Data</b>
           </mat-panel-title>
           <mat-panel-description>
-              Additional information regarding the task and its assignees
+              Additional data regarding the task and its assignees
           </mat-panel-description>
       </mat-expansion-panel-header>
       <p> 
-        <b> Email:  </b> {{task.information.email}} |     
-        <input type="email"  pattern="[a-zA-Z ]*"  [(ngModel)]="task.information.email" placeholder="email" [disabled]=" task.state=='SUSPENDED' || task.state=='COMPLETED'" (change)="save()">
+        <b> Email:  </b> {{task.data.email}} |     
+        <input type="email"  [(ngModel)]="task.data.email" placeholder="email" [disabled]=" task.state=='SUSPENDED' || task.state=='COMPLETED'" (focusout)="save()">
       </p>
       <p> 
-        <b> Phone number:</b> {{task.information.phone}} |  
-        <input [(ngModel)]="task.information.phone" placeholder="phone" [disabled]=" task.state=='SUSPENDED' || task.state=='COMPLETED'" (change)="save()">
+        <b> Phone number:</b> {{task.data.phone}} |  
+        <input [(ngModel)]="task.data.phone" placeholder="phone" [disabled]=" task.state=='SUSPENDED' || task.state=='COMPLETED'" (focusout)="save()">
       </p>
       <p> 
-        <b> Address: </b>{{task.information.address}} |  
-        <input [(ngModel)]="task.information.address" placeholder="address" [disabled]=" task.state=='SUSPENDED' || task.state=='COMPLETED'" (change)="save()">
-       </p>
+        <b> Address: </b>{{task.data.address}} |  
+        <input [(ngModel)]="task.data.address" placeholder="address" [disabled]=" task.state=='SUSPENDED' || task.state=='COMPLETED'" (focusout)="save()">
+      </p>
+
+       <input type="text" placeholder="key" >
+       <input type="text" placeholder="value">
+
+
+       <button class="btn btn-success">+Add</button>
+
     </mat-expansion-panel>
   </mat-accordion>
-
-
-  <!-- <button class="btn btn-success" (click)="save()">Save</button> -->
 
   <hr>
 
