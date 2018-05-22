@@ -54,24 +54,25 @@
               Additional data regarding the task and its assignees
           </mat-panel-description>
       </mat-expansion-panel-header>
-      <p> 
-        <b> Email:  </b> {{task.data.email}} |     
-        <input type="email"  [(ngModel)]="task.data.email" placeholder="email" [disabled]=" task.state=='SUSPENDED' || task.state=='COMPLETED'" (focusout)="save()">
-      </p>
-      <p> 
-        <b> Phone number:</b> {{task.data.phone}} |  
-        <input [(ngModel)]="task.data.phone" placeholder="phone" [disabled]=" task.state=='SUSPENDED' || task.state=='COMPLETED'" (focusout)="save()">
-      </p>
-      <p> 
-        <b> Address: </b>{{task.data.address}} |  
-        <input [(ngModel)]="task.data.address" placeholder="address" [disabled]=" task.state=='SUSPENDED' || task.state=='COMPLETED'" (focusout)="save()">
-      </p>
 
-       <input type="text" placeholder="key" >
-       <input type="text" placeholder="value">
+        <table class="table table-striped">
+          <tr *ngFor="let item of task.data">
+            <td >
+                {{item}}
+            </td>
+            <td>
+                <span class="btn btn-warning btn-xs" (click)="deleteItemData(item)">x</span>
+            </td>
+          </tr>
+        </table>
 
+        <input  #itemInput type="text" placeholder="Item" (keyup.enter)="addItemData(itemInput.value); itemInput.value = ''" [disabled] = "task.state=='SUSPENDED'">
 
-       <button class="btn btn-success">+Add</button>
+        <button  class="btn btn-success" 
+                  (click) = "addItemData(itemInput.value); itemInput.value = ''"
+                  [disabled] = "task.state=='SUSPENDED'">
+                  +Add
+        </button>
 
     </mat-expansion-panel>
   </mat-accordion>

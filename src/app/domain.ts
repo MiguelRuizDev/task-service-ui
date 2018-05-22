@@ -12,7 +12,7 @@ export class Task {
     parent:string;
     description:string;
 
-    data: Object;
+    data: Array<string>;
 
     constructor(title: string, description: string){
         this.title = title;

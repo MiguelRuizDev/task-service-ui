@@ -70,6 +70,16 @@ export class TaskDetailComponent implements OnInit {
     this.location.back();
   }
 
+  addItemData(item: string ): void{
+    this.task.data.push(item);
+    this.save();
+  }
+
+  deleteItemData(itemToDelete: string){
+    this.task.data = this.task.data.filter(item => item !== itemToDelete);
+    this.save();
+  }
+
 
 
 }
