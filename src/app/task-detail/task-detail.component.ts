@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { TaskService }  from '../task.service';
 import { toString } from 'typescript-collections/dist/lib/arrays';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-task-detail',
@@ -15,6 +16,8 @@ export class TaskDetailComponent implements OnInit {
 
   @Input() 
   task: Task;
+
+
 
   constructor(
     private taskService: TaskService,
@@ -29,48 +32,22 @@ export class TaskDetailComponent implements OnInit {
   getTask(): void{
     const id = this.route.snapshot.paramMap.get('id');
     this.taskService.getTask(id)
-      .subscribe(data => this.task = data);
-  }
-
-  suspend(): void {
-    this.taskService.suspendTask(this.task).subscribe(
-      () => this.getTask(),
-    );
-  }
-
-  activate(): void {
-    this.taskService.activateTask(this.task).subscribe(
-      () => this.getTask(),
-    );
-  }
-
-  complete(): void {
-    this.taskService.completeTask(this.task).subscribe(
-      () => this.getTask(),
-    );
-  }
-
-  assign(): void {
-    this.taskService.assignTask(this.task).subscribe(
-      () => this.getTask(),
-    );
-  }
-
-  release(): void {
-    this.taskService.releaseTask(this.task).subscribe(
-      () => this.getTask(),
-    );
+      .subscribe(
+        data => this.task = data
+      );
   }
 
   save(): void {
-    this.taskService.updateTask(this.task).subscribe();
+    this.taskService.updateTask(this.task).subscribe(
+      () => this.getTask(),
+    );
   }
 
   goBack(): void {
     this.location.back();
   }
 
-  addItemData(item: string ): void{
+  addItemData(item: string ): void {
     this.task.data.push(item);
     this.save();
   }
@@ -79,6 +56,43 @@ export class TaskDetailComponent implements OnInit {
     this.task.data = this.task.data.filter(item => item !== itemToDelete);
     this.save();
   }
+
+
+
+
+  filterLinks: Array<string> = ['self', 'Update', 'Delete']
+
+  getKeys(filters :Array<string>): string[]{
+
+    let keys = Object.keys(this.task._links);
+    for( let filter of filters){
+      keys = keys.filter(
+        key => key !== filter,
+      );
+    }
+    return keys;
+  }
+
+  genericAction(url: string, input: string){
+    this.taskService.genericActionService(url, input).subscribe(
+      () => this.getTask(),
+    );
+  }
+
+  checkIfLinkRelAssignIsPresent(key: string): boolean{
+    return key == "Assign";
+  }
+
+  hasParameter(url : string): boolean {
+    return url.includes('?');
+  }
+
+
+  
+
+  
+
+
 
 
 

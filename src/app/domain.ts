@@ -14,6 +14,8 @@ export class Task {
 
     data: Array<string>;
 
+    _links: any;
+
     constructor(title: string, description: string){
         this.title = title;
         this.description = description;

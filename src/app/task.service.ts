@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {Task} from './domain';
 import { Observable} from 'rxjs';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { forEach } from 'typescript-collections/dist/lib/arrays';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,7 +20,7 @@ export class TaskService {
 
   getAllTasks(state: string): Observable<Task[]>{
     if(state != "any"){
-      return this.http.get<Task[]>(this.mainUrl + `?state=${state}`);
+      return this.http.get<Task[]>(this.mainUrl + `?state=${state}`+ '?page=0&size=5');
     }else{
       return this.http.get<Task[]>(this.mainUrl);
     }
@@ -34,36 +35,31 @@ export class TaskService {
     return this.http.post<Task>(this.mainUrl, task, httpOptions);
   }
 
-  suspendTask(task: Task): Observable<any>{
-    return this.http.post(this.mainUrl + `/${task.id}/suspend`, httpOptions);
-  }
-
-  activateTask(task: Task): Observable<Task>{
-    return this.http.post<Task>(this.mainUrl + `/${task.id}/activate`, httpOptions)
-  }
-
-  completeTask(task: Task): Observable<Task>{
-    return this.http.post<Task>(this.mainUrl + `/${task.id}/complete`, httpOptions)
-  }
-
-  assignTask(task: Task) : Observable<Task>{
-    return this.http.post<Task>(this.mainUrl + `/${task.id}/assign?user=${task.assignedUser}`, httpOptions)
-  }
-
-  releaseTask(task: Task) : Observable<Task>{
-    return this.http.post<Task>(this.mainUrl + `/${task.id}/release`, httpOptions)
-  }
-
-  updateTask(task: Task):Observable<any>{
-    return this.http.post(this.mainUrl + `/${task.id}`, task, httpOptions);
+  updateTask(task: Task) :Observable<any>{
+    return this.http.post(task._links.Update.href.replace("{id}",task.id), task, httpOptions);
   }
 
   deleteTask(task: Task): Observable<Task>{
-    return this.http.delete<Task>(this.mainUrl + `/${task.id}/delete`, httpOptions)
+    //TODO implement "task._links.delete" once server collection retrieves the same response structure than a single element
+    return this.http.delete<Task>(this.mainUrl + `/${task.id}/delete`, httpOptions);
   }
 
+  genericActionService(url: string, input: string):Observable<any> {
+    
+    if (input){
+      //for now, the only method with params is the assignUser method
+      //more scalability in the future
+      url = url.replace('user={user}','');
 
+      const params = new HttpParams()
+      .set('user', input);
 
+      return this.http.post(url, httpOptions, {params});
 
+    }else {
+      return this.http.post(url, httpOptions);
+    }
+    
+  }
 
 }

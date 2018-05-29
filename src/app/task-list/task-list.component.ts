@@ -7,7 +7,6 @@ import {DataSource} from '@angular/cdk/table';
 import {MatPaginator, MatTableDataSource, MatTable, MatSort} from '@angular/material';
 
 
-
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',

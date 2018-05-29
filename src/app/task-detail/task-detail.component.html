@@ -37,11 +37,8 @@
       <input [(ngModel)]="task.description" placeholder="description" [disabled]="task.state=='SUSPENDED' ||  task.state=='COMPLETED'" (focusout)="save()">
     </li>
     <li class="list-group-item"> 
-      <b> Assigned User: </b>  {{task.assignedUser}} |  
-      <input [(ngModel)]="task.assignedUser" placeholder="assignedUser" [disabled]="task.state=='COMPLETED' || task.state=='SUSPENDED'" #assignedUserInput>
-      <button class="btn btn-info" (click)="assign()" [disabled]="task.state=='COMPLETED' || task.state=='SUSPENDED' || task.state=='ASSIGNED' || assignedUserInput.value==''">Assign</button>
-      <button class="btn btn-info" (click)="release()" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED' || task.state=='ACTIVE'">Release</button>
-    </li>
+      <b> Assigned User: </b>  {{task.assignedUser}}
+    </li> 
   </ul>
 
   <mat-accordion>
@@ -68,7 +65,7 @@
 
         <input  #itemInput type="text" placeholder="Item" (keyup.enter)="addItemData(itemInput.value); itemInput.value = ''" [disabled] = "task.state=='SUSPENDED'">
 
-        <button  class="btn btn-success" 
+        <button   class="btn btn-success" 
                   (click) = "addItemData(itemInput.value); itemInput.value = ''"
                   [disabled] = "task.state=='SUSPENDED'">
                   +Add
@@ -79,13 +76,27 @@
 
   <hr>
 
-  <button class="btn btn-info" (click)="suspend()" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'">Suspend</button>
+  <h3>Action Buttons</h3>
 
-  <button class="btn btn-info" (click)="activate()" [disabled]="task.state=='ACTIVE' || task.state=='COMPLETED' || task.state=='ASSIGNED'">Activate</button>
+  <span *ngFor="let key of getKeys(this.filterLinks)">
 
-  <button class="btn btn-info" (click)="complete()" [disabled]="task.state=='SUSPENDED' || task.state=='COMPLETED'">Complete</button>
+    <button
+    class="btn btn-info"
+    (click)="genericAction(task._links[key].href, keyValue)">
+        {{ key }}
+    </button>
+
+    <span *ngIf="hasParameter(task._links[key].href)">
+        <input  #actionInput 
+                type="text" 
+                [placeholder]="key + ' input...'" 
+                [(ngModel)]="keyValue" >
+    </span>
+
+  </span>
 
   <hr>
   
   <a class="btn btn-primary" routerLink="/tasks">Go back</a>
+
 </div>
